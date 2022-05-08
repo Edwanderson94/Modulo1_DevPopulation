@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">
+		<main role="main">
+		
+		<section class="jumbotron text-center">			
+			<img class="d-block mx-auto" th:src="@{/image/spring-security.png}"
+				width="72" height="72">
+			<div class="container">
+				<h1 class="jumbotron-heading">DevPopulation</h1>
+				<p class="lead text-muted">Vilas e Habitantes</p>
+			</div>
+		</section>
+
+		<div class="album py-5 bg-light">
+			<div class="container">
+
+				<div class="d-flex justify-content-center">
+					<div class="col-md-8">
+					
+						<div th:replace="fragments/alert  :: alerta-sucesso"></div>
+						
+						<form th:action="${vila.id == null} ? @{/vilas/salvar} : @{/vilas/editar}"
+							  th:object="${vila}"	method="POST" class="was-validated">
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="nome" class="form-group">Nome Completo</label>
+									<input type="text" class="form-control"
+										th:field="*{nome}" id="nome" placeholder="João da Silva"
+										required/>
+									<div class="invalid-feedback">Nome completo é requerido.</div>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="orcamento">Orçamento da Vila</label> 
+									<input type="text" class="form-control" id="orcamento" placeholder="000000"
+										th:field="*{orcamento}" required />
+									<div class="invalid-feedback">Orçamento é requerido.</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="gasto">Gasto</label> 
+									<input
+										type="date" class="form-control" id="dtInscricao"
+										th:field="*{gasto}" required />
+									<div class="invalid-feedback">Gasto.</div>	
+								</div>
+							</div>
+
+							
+
+							<div id="especialidades-selecionadas">
+								<div class="form-group">
+									<label for="autocomplete-especialidades">Profissão(ões)</label>
+									<input type="text" id="autocomplete-especialidades"
+										class="form-control" placeholder="suas especialidade são..." /> 
+									<small class="form-text text-muted">Insira as profissões dos habitantes.</small>
+										
+								</div>
+							</div>							
+							<div id='listaProfissoes'>
+								<input type="hidden" name="profissoes" value=""/>
+							</div>							
+							
+							<input type="hidden" name="uid" th:field="*{usuario.id}">
+							<input type="hidden" name="id" th:field="*{id}">
+														
+							<div class="form-group row">
+								<div class="col-sm-10">
+									<button type="submit" class="btn btn-primary"
+										data-toggle="tooltip" data-placement="right" title="Salvar">
+										<i class="fas fa-save"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+
+						<hr />
+
+						<h2>Profissoes dos Habitantes</h2>
+						<table id="table-vila-profissao" 
+							class="table table-sm table-striped table-bordered nowrap"
+							style="width: 100%">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Profissão</th>
+									<th scope="col">Excluir</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</main>
+		
+	</section>
+	<script	th:src="@{/js/medico.js(v=${version})}"	th:fragment="js"></script>
+	<script th:inline="javascript" th:fragment="inlinescript"></script>
+</body>
+</html>
